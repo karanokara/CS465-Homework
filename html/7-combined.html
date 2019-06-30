@@ -2,7 +2,7 @@
 <html>
 
 <body>
-    <table>
+    <table border="1">
         <tr>
             <th>attribute</th>
             <th>value</th>
@@ -23,21 +23,23 @@
         </tr>
         <tr>
             <td>major</td>
-            <td>
-                <select name="" id="">
+            <td><select name="" id="" size="3" multiple>
                     <option value="">math</option>
-                    <option value="">computer science</option>
+                    <option value="" selected>computer science</option>
                     <option value="">physics</option>
-                </select>
+                </select></td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                anything else?
+                <br>
+                <textarea name="" id=""></textarea>
             </td>
         </tr>
         <tr>
-            anything else?
-            <br>
-            <textarea name="" id=""></textarea>
-        </tr>
-        <tr>
-            <input type="button" value="submit">
+            <td colspan="2">
+                <input type="button" value="submit">
+            </td>
         </tr>
     </table>
 </body>
