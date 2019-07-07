@@ -11,19 +11,19 @@
 
 		var functionInsert = function (strKey, strValue) {
 			// insert the property with strKey and strValue into objectStrings
-			objectStrings.strKey = strValue;
+			objectStrings[strKey] = strValue;
 		};
 
 		var functionDelete = function (strKey) {
 			// remove the property with strKey from objectStrings
 			if (objectStrings.hasOwnProperty(strKey))
-				delete objectStrings.strKey;
+				delete objectStrings[strKey];
 		};
 
 		var functionLookup = function (strKey) {
 			// return the strValue from objectStrings that is associated with strKey
 			if (objectStrings.hasOwnProperty(strKey))
-				return objectStrings.strKey;
+				return objectStrings[strKey];
 
 			// objectStrings might not contain strKey
 			// should this be the case, return an empty string
@@ -33,13 +33,14 @@
 
 		var functionKeys = function () {
 			// return a string of the concatenated strKey in objectStrings, separated by commas
-			var addComma = 0;
+			var addComma = 0,
+				str = '';
 			for (var i in objectStrings) {
 				if (addComma)
 					str += ', ';
 				else
 					addComma = 1;
-				str += objectStrings[i];
+				str += i;
 			}
 
 			return str;
