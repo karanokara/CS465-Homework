@@ -17,23 +17,24 @@
 			// should this function be called multiple times, the output div should only contain the table of the most recent call
 
 			var rows = strInput.split('\n'),
-				rowLen = rows.length;
+				rowLen = rows.length,
+				i, j;
 
-			var txt = '<table border="1">';
+			var txt = '<table border="1"><tbody>';
 
-			for (let i = 0; i < rowLen; ++i) {
+			for (i = 0; i < rowLen; ++i) {
 				if (rows[i].length != 0) {
-					let cols = rows[i].split(','),
+					var cols = rows[i].split(','),
 						colLen = cols.length;
 
-					txt += '<tr>'
-					for (let j = 0; j < colLen; ++j) {
+					txt += '<tr>';
+					for (j = 0; j < colLen; ++j) {
 						txt += '<td>' + cols[j] + '</td>';
 					}
-					txt == '</tr>'
+					txt == '</tr>';
 				}
 			}
-			txt += '</table>'
+			txt += '</tbody></table>';
 
 			document.getElementById('output').innerHTML = txt;
 		};
