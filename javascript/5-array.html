@@ -16,24 +16,41 @@
 
 		var functionDelete = function (intNumber) {
 			// remove the first occurrence of intNumber in intArray
-			intArray.shift();
+			for (var i = 0; i < intArray.length; ++i) {
+				if (intNumber == intArray[i]) {
+					intArray.splice(i, 1);
+					return;
+				}
+			}
 			// intArray might not contain intNumber
 			// the function does not have an effect in this case
 		};
 
 		var functionLookup = function (intIndex) {
 			// return the intNumber from intArray at intIndex, deleting the obtained intNumber
-
+			if (intIndex >= 0) {
+				var removed = intArray.splice(intIndex, 1);
+				if (removed.length != 0)
+					return removed[0];
+			}
 			// intIndex might be out of bounds
 			// should this be the case, return null
-
-			return 0;
+			return null;
 		};
 
 		var functionValues = function () {
 			// return a string of the concatenated intNumber in intArray, separated by commas
+			var addComma = 0,
+				str = '';
+			for (var i in intArray) {
+				if (addComma)
+					str += ', ';
+				else
+					addComma = 1;
+				str += intArray[i];
+			}
 
-			return '';
+			return str;
 		};
 
 		functionInsert(1);
