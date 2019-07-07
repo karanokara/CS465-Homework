@@ -9,9 +9,13 @@
 	<script type="text/javascript">
 		var functionEnumerate = function (dblInput) {
 			// return a string of the concatenated numbers in dblInput, separated by commas and with three digits after the decimal point
-			var str = '';
-			for (var ele in dblInput) {
-				str += ele.toFixed(3);
+			var str = '',
+				len = dblInput.length;
+
+			for (var i = 0; i < len; ++i) {
+				str += dblInput[i].toFixed(3);
+				if ((i + 1) != len)
+					str += ', ';
 			}
 			return str;
 		};
