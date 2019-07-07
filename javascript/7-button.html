@@ -18,7 +18,7 @@
 		// attach an onclick listener to document.getElementById('copy') that copies the content from document.getElementById('input') to document.getElementById('output')
 		var copy = document.getElementById('copy');
 		copy.addEventListener('click', function () {
-			document.getElementById('output').innerHTML = document.getElementById('input').innerHTML;
+			document.getElementById('output').innerHTML = document.getElementById('input').value;
 		});
 	</script>
 </body>
