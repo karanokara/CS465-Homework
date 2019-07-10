@@ -20,7 +20,7 @@ var server = http.createServer(function (request, response) {
     else if (thisURL.pathname.includes('/test/')) {
         response.write('you have accessed "' + thisURL.pathname.replace('/test/', '') + '" within test');
     }
-    else if (request.url.includes('/attributes?')) {
+    else if (request.url.includes('/attributes')) {
         response.setHeader('content-type', 'text/html');
         var qy = thisURL.query;
 
