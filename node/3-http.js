@@ -20,36 +20,46 @@ http.createServer(function (request, response) {
     }
     // http://localhost:8080/redirect should redirect the request to '/redirected' by using 302 as the status code
     else if (thisURL.pathname === '/redirect') {
+        var redirected = '/redirected';
         response.statusCode = 302;
         response.setHeader('content-type', 'text/plain');
-        response.write('you have accessed "' + thisURL.pathname.replace('/test/', '') + '" within test');
+        response.setHeader('location', redirected);
+
     }
     // http://localhost:8080/cache should return 'cache this resource' in plain text and set the cache max age to a day
     else if (thisURL.pathname === '/cache') {
         response.statusCode = 200;
         response.setHeader('content-type', 'text/plain');
-        response.setHeader('content-type', 'text/html');
-        var qy = thisURL.query;
-
-        var str = '<!DOCTYPE html>' +
-            '<html>' +
-            '<body>' +
-            '<table border="1">';
-        for (var key in qy) {
-            str += '<tr><td>' + key + '</td><td>' + qy[key] + '</td></tr>';
-        }
-        str += '</table></body></html>';
-        response.write(str);
+        response.setHeader('cache-control', 'max-age=' + 24 * 60 * 60); // in second
+        response.write('cache this resource');
     }
     // http://localhost:8080/cookie should return 'i gave you a cookie' in plain text and set 'hello=world' as a cookie
     else if (thisURL.pathname == '/cookie') {
         response.statusCode = 200;
         response.setHeader('content-type', 'text/plain');
+        response.setHeader('set-cookie', ['hello=world']);
+
+        response.write('i gave you a cookie');
+
     }
     // http://localhost:8080/check should return 'yes' / 'no' in plain text depending on whether the browser has the 'hello' cookie
     else if (thisURL.pathname == '/check') {
+        //var requestH = request.
+        // console.log('<request>:');
+        // console.log(request);
+        // console.log('<response>:');
+        // console.log(response);
+        var cookie = request.headers['cookie'];
         response.statusCode = 200;
         response.setHeader('content-type', 'text/plain');
+
+        if (cookie && cookie.includes('hello')) {
+            response.write('yes');
+        }
+        else {
+            response.write('no');
+        }
+
     }
     else {
         response.statusCode = 200;
