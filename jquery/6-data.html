@@ -5,7 +5,7 @@
 
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=0" />
 
-		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	</head>
 	<body>
 		<div id="output"></div>
@@ -20,7 +20,13 @@
 				for(var i = 0; i< intHeight; ++i) {
 					var tr = $('<tr></tr>');
 					for(var j = 0; j < intWidth; ++j) {
-						tr.append('<td>' + (i+1) + '.' + (j+1) + '</td');
+						var td = $('<td></td').text('click me')
+						td.on('click',(function(i,j,_this) {
+							return function () {
+								_this.text((i+1) + '.' + (j+1));
+							};
+						})(i,j,td));
+						tr.append(td);
 					}
 					re.append(tr);
 				}
