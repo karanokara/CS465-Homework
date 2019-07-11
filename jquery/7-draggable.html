@@ -5,7 +5,7 @@
 
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=0" />
 
-		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
 		<style type="text/css">
 			#draggable {
@@ -32,6 +32,30 @@
 			// you can try setting the position of jQuery('#draggable') to event.pageX / .pageY but you eventually have to also incorporate the relative position that we computed in the mousedown event
 
 			// attach a mouseup listener to jQuery(document) that resets the global is-being-dragged flag, such that the dragging will stop once you lift the mouse button
+			var isDragging = 0;
+
+			$('body').css('position','relative');
+
+			$('#draggable').css('position','absolute').on('mousedown', function() {
+				isDragging = 1;
+			}).on('mousemove',function(ent) {
+				if(isDragging) {
+					var x = ent.pageX,
+						y = ent.pageY,
+						curX = this.pageX,
+						curY = this.pageY,
+						offsetX = curX - x,
+						offsetY = curY - y;
+					$(this).css({
+						'top': offsetY + 'px',
+						'left': offsetX + 'px'
+					});
+				}
+			}).on('mouseup', function() {
+				isDragging = 0;
+			});
+
+
 		</script>
 	</body>
 </html>
