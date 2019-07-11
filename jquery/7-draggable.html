@@ -32,29 +32,60 @@
 			// you can try setting the position of jQuery('#draggable') to event.pageX / .pageY but you eventually have to also incorporate the relative position that we computed in the mousedown event
 
 			// attach a mouseup listener to jQuery(document) that resets the global is-being-dragged flag, such that the dragging will stop once you lift the mouse button
-			var isDragging = 0;
+			
+			$('body').css({
+				'position':'relative',
+			});
 
-			$('body').css('position','relative');
+			jQuery("#draggable")
+    		.css({
+        		"position": "absolute",
+        		"left": "8px",
+        		"top": "8px"
+    		});
 
-			$('#draggable').css('position','absolute').on('mousedown', function() {
+			
+			var drag = $('#draggable'),
+				isDragging = 0,
+				offsetX = 0,
+				offsetY = 0,
+				originX = drag.offset().left,
+				originY = drag.offset().top,
+				objX = 0,
+				objY = 0;
+
+			drag.css('position','absolute').on('mousedown', function(ent) {
 				isDragging = 1;
+				// if($(this).css('top') != objY) {
+				// 	originY = originY - $(this).css('top')
+				// }
+				// if(drag.offset().top - originY != objY) {
+				// originY = drag.offset().top - objY
+				// }
+				
+				offsetX = ent.pageX - (drag.offset().left - originX),
+				offsetY = ent.pageY - (drag.offset().top - originY);
+
 			}).on('mousemove',function(ent) {
 				if(isDragging) {
-					var x = ent.pageX,
-						y = ent.pageY,
-						curX = this.pageX,
-						curY = this.pageY,
-						offsetX = curX - x,
-						offsetY = curY - y;
+					var mouseX = ent.pageX,
+						mouseY = ent.pageY;
+
+					objX = mouseX - offsetX,
+					objY = mouseY - offsetY;
 					$(this).css({
-						'top': offsetY + 'px',
-						'left': offsetX + 'px'
+						'top':  objY + 'px',
+						'left': objX + 'px',
 					});
 				}
 			}).on('mouseup', function() {
 				isDragging = 0;
 			});
 
+			$(document).on('mouseup',function() {
+				if(isDragging)
+					isDragging = 0;
+			});
 
 		</script>
 	</body>
