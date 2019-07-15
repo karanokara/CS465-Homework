@@ -4,8 +4,8 @@ var fs = require('fs');
 
 var server = express();
 
-server.get('/2-table.html', function(req, res) {
-	fs.readFile('./2-table.html', function(err, data) {
+server.get('/2-table.html', function (req, res) {
+	fs.readFile('./2-table.html', function (err, data) {
 		res.writeHead(200, {
 			'Content-Type': 'text/html'
 		});
@@ -16,7 +16,7 @@ server.get('/2-table.html', function(req, res) {
 				{ 'strFirst': Math.random().toString(36).substr(2), 'strLast': Math.random().toString(36).substr(2), 'strGender': Math.random().toString(36).substr(2), 'boolVisible': Math.random() < 0.5 },
 				{ 'strFirst': Math.random().toString(36).substr(2), 'strLast': Math.random().toString(36).substr(2), 'strGender': Math.random().toString(36).substr(2), 'boolVisible': Math.random() < 0.5 }
 			],
-			'functionName': function() {
+			'functionName': function () {
 				return this.strFirst + ' ' + this.strLast;
 			}
 		}));
