@@ -1,6 +1,44 @@
 'use strict';
 
 var express = require('express'); // do not change this line
+var app = express();
+
+var port = Number(process.env.PORT);
+var hostname = 'localhost';
+
+
+
+app.get('/lorem', function (req, res) {
+
+    res.send('<!DOCTYPE html><html><body>lorem ipsum</body></html>');
+});
+
+
+app.get('/test/hello', function (req, res) {
+    res.send('you have accessed "hello" within test');
+});
+
+
+app.get('/test/world', function (req, res) {
+    res.send('you have accessed the root');
+});
+
+app.get('/', function (req, res) {
+    res.send('you have accessed the root');
+});
+
+// A route match any path
+// will be used as the final choice
+app.use(function (req, res, next) {
+    res.send('');
+});
+
+app.listen(port, function () {
+
+    console.log(`Example app listening on port ${port}!`);
+
+});
+
 
 // http://localhost:8080/ should return 'you have accessed the root' in plain text
 

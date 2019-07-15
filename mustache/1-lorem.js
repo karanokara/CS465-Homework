@@ -4,8 +4,8 @@ var fs = require('fs');
 
 var server = express();
 
-server.get('/1-lorem.html', function(req, res) {
-	fs.readFile('./1-lorem.html', function(err, data) {
+server.get('/1-lorem.html', function (req, res) {
+	fs.readFile('./1-lorem.html', function (err, data) {
 		res.writeHead(200, {
 			'Content-Type': 'text/html'
 		});
