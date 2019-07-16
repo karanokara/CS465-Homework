@@ -53,4 +53,48 @@
 				</table>
 		-->
 	</body>
+
+	<script type="text/javascript">
+		var table = $('<table></table>'),
+			tbody = $('<tbody></tbody>'),
+			dblValue, 
+			strName, 
+			dblChange, 
+			intTime, 
+			intVolume,
+			dbColors = ['rgb(188, 103, 114)','rgb(173, 196, 162)'],
+			dbColor = 0;
+
+		table.attr('border',1);
+		table.append(tbody);
+		tbody.append('<tr><th>name</th><th>value</th><th>change</th><th>time</th><th>volume</th></tr>');
+
+		{{#objectStocks}}
+		dblValue = {{dblValue}};
+		dblChange = {{dblChange}}; 
+		intTime = moment({{intTime}}); 
+		intVolume = {{intVolume}};
+		if(intVolume > 1000000000) {
+			intVolume = (intVolume / 1000000000).toFixed(1) + ' B';
+		}
+		else if(intVolume > 1000000) {
+			intVolume = (intVolume / 1000000).toFixed(1) + ' M';
+		}
+		else if(intVolume > 1000) {
+			intVolume = (intVolume / 1000).toFixed(1) + ' T';
+		}
+		dbColor = dbColors[((dblChange > 0)? 1 : 0)];
+
+		tbody.append('<tr>' +
+						'<td>{{strName}}</td>' +
+						'<td>' + dblValue.toFixed(2) +'</td>' +
+						'<td style="background-color: ' + dbColor + ';">' + dblChange.toFixed(2) + '</td>' +
+						'<td>' + intTime.format('YYYY.MM.DD - HH:mm:ss.SSS') + '</td>' +
+						'<td>' + intVolume + '</td>' +
+					'</tr>');
+		{{/objectStocks}}
+
+		$('body').append(table);
+	</script>
+
 </html>

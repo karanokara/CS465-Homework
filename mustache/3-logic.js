@@ -4,8 +4,8 @@ var fs = require('fs');
 
 var server = express();
 
-server.get('/3-logic.html', function(req, res) {
-	fs.readFile('./3-logic.html', function(err, data) {
+server.get('/3-logic.html', function (req, res) {
+	fs.readFile('./3-logic.html', function (err, data) {
 		res.writeHead(200, {
 			'Content-Type': 'text/html'
 		});
