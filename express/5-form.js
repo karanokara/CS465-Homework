@@ -2,6 +2,55 @@
 
 var express = require('express'); // do not change this line
 var parser = require('body-parser'); // do not change this line
+var app = express();
+
+var port = Number(process.env.PORT) || 8080;
+var hostname = 'localhost';
+
+var msg = [];
+
+//app.use(express.json()); // for parsing application/json
+//app.use(express.urlencoded({ extended: true })); // for parsing 
+// above == below
+app.use(parser.urlencoded({ extended: false }));
+
+app.get('/form', function (req, res) {
+    var str = '<!DOCTYPE html><html><body><form action="/new" method="post"><input type="text" name="name"><input type="text" name="message"><input type="submit" value="submit"></form></body></html>';
+    res.send(str);
+});
+
+app.post('/new', function (req, res) {
+    //console.log(req);
+    //console.log(req.body);
+    msg.push(req.body);
+    console.log(msg);
+    // res.json(req.body);      // res.send() is called inside this fnc
+    res.set('content-type', 'text/plain');
+    res.send('thank you for your message');
+});
+
+app.get('/list', function (req, res) {
+    var str = '';
+    for (var i = 0; i < msg.length; ++i) {
+        str += msg[i]['name'] + ': ' + msg[i]['message'];
+        if (i != (msg.length - 1))
+            str += '\n';
+    }
+
+    res.set('content-type', 'text/plain');
+    res.send(str);
+});
+
+// A route match any path
+// will be used as the final choice
+app.use(function (req, res) {
+    console.log('Last Fallback Called');
+    res.send('');
+});
+
+app.listen(port, hostname, function () {
+    console.log(`Example app listening on port ${port}!`);
+});
 
 // preface: use the body-parser middleware that helps you retrieve and parse the post data from the form
 
