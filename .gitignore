@@ -1,6 +1,4 @@
 setup.bash
 node_modules
-package.json
 .eslintrc.json
-package-lock.json
 note.js
