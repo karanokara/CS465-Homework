@@ -14,8 +14,8 @@ app.use(session({
     resave: false,
     saveUninitialized: true,
     cookie: {
-
-    }
+        secure: false,      // can be true if using https, 
+    }                       // otherwise, must be false
 }));
 
 // A route match any path
