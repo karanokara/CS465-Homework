@@ -2,6 +2,45 @@
 
 var express = require('express'); // do not change this line
 var session = require('express-session'); // do not change this line
+var app = express();
+
+
+var port = Number(process.env.PORT) || 8080;
+var hostname = 'localhost';
+
+
+app.use(session({
+    secret: 'keyboard cat',
+    resave: false,
+    saveUninitialized: true,
+    cookie: {
+
+    }
+}));
+
+// A route match any path
+// will be used as the final choice
+app.use(function (req, res) {
+    console.log(req.session);
+
+    res.set('content-type', 'text/plain');
+    if (req.session.lastview) {
+        var lastview = req.session.lastview;
+        req.session.lastview += '\n  ' + req.url;
+        res.send('your history:\n  ' + lastview);
+    }
+    else {
+        req.session.lastview = req.url;
+        res.send('you must be new');
+    }
+    console.log(req.session);
+});
+
+app.listen(port, hostname, function () {
+
+    console.log(`Example app listening on port ${port}!`);
+
+});
 
 // preface: use the express-session middleware with the memorystore session storage which should make this task rather easy
 
