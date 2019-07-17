@@ -6,7 +6,6 @@ var app = express();
 var port = Number(process.env.PORT) || 8080;
 var hostname = 'localhost';
 
-
 app.get('/attributes', function (request, response) {
     console.log(request);
     var qy = request.query;
@@ -27,7 +26,6 @@ app.get('/lorem', function (req, res) {
 
     res.send('<!DOCTYPE html><html><body>lorem ipsum</body></html>');
 });
-
 
 app.use('/test', function (req, res) {
     res.set({ 'content-type': 'text/plain' });
