@@ -15,8 +15,10 @@ var msg = [];
 app.use(parser.urlencoded({ extended: false }));
 
 app.get('/form', function (req, res) {
+
     var str = '<!DOCTYPE html><html><body><form action="/new" method="post"><input type="text" name="name"><input type="text" name="message"><input type="submit" value="submit"></form></body></html>';
     res.send(str);
+
 });
 
 app.post('/new', function (req, res) {
@@ -25,8 +27,10 @@ app.post('/new', function (req, res) {
     msg.push(req.body);
     console.log(msg);
     // res.json(req.body);      // res.send() is called inside this fnc
+
     res.set('content-type', 'text/plain');
     res.send('thank you for your message');
+
 });
 
 app.get('/list', function (req, res) {
@@ -44,12 +48,16 @@ app.get('/list', function (req, res) {
 // A route match any path
 // will be used as the final choice
 app.use(function (req, res) {
+
     console.log('Last Fallback Called');
+
     res.send('');
 });
 
 app.listen(port, hostname, function () {
+
     console.log(`Example app listening on port ${port}!`);
+
 });
 
 // preface: use the body-parser middleware that helps you retrieve and parse the post data from the form
