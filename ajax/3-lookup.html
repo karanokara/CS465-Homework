@@ -50,13 +50,16 @@
 		var choice = $('#choice'),
 			first = $('#first'),
 			last = $('#last'),
-			genderMale = $('[name=gender][value=male]'),
-			genderFemale = $('[name=gender][value=female]'),
-			genderOther = $('[name=gender][value=other]'),
+			gender = $('[name=gender]'),
+			genderObj = {
+				male: $('[name=gender][value=male]'),
+				female: $('[name=gender][value=female]'),
+				other: $('[name=gender][value=other]'),
+			},
 			random = $('#random');
 
 		var handle = function () {
-			var strInput = choice.selectedOptions[0].text;
+			var strInput = choice[0].selectedOptions[0].text;
 
 			$.ajax({
 				url: 'http://cs465.oregonctf.org/playground/ajax/lookup.json',
@@ -78,14 +81,11 @@
 					console.log(status);
 					console.log(xhr);
 
-					var arr = data['strFiles'],
-						str = '';
-					for (var i = 0; arr && i < arr.length; ++i) {
-						str += arr[i];
-						if (i != (arr.length - 1))
-							str += '\n';
-					}
-					output.text(str);
+					first.val(data.strFirst);
+					last.val(data.strLast);
+					gender.attr('checked', null);
+					genderObj[data.strGender].attr('checked', '');
+					random.val(data.strRandom);
 				},
 				error: function (xhr, status) {
 					alert('error');
@@ -93,8 +93,7 @@
 			});
 		};
 
-		input.on('keyup', handle);
-		input.on('change', handle);
+		choice.on('change', handle);
 	</script>
 </body>
 
