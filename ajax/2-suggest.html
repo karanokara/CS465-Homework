@@ -16,6 +16,38 @@
 			// when someone enters a letter (example: 'b') into the input textbox, the script should make a get request to: http://cs465.oregonctf.org/playground/ajax/suggest.json?strFile=b with the query string parameter `strFile` set to the input letter as shown.
 			// the data that is being received by this query is in the json format and might look like: { 'strFiles':['bash','bunzip2','busybox'] }
 			// this received data should subsequently set as the content of the output element as follows: 'bash\nbunzip2\nbusybox'
+			var input = $('#input'),
+				submit = $('#submit'),
+				output = $('#output');
+
+			submit.on('click', function() {
+				var strInput = input.val();
+
+				$.ajax({	
+					url: 'http://cs465.oregonctf.org/playground/ajax/lorem.txt',
+					data: {
+						strInput: strInput,
+					},
+					method: 'GET',
+					contentType: 'text/plain',
+					beforeSend: function() {
+
+					},
+					complete: function(xhr,status) {
+						
+					},
+					success: function(data, status, xhr) {
+						console.log(data);
+						console.log(status);
+						console.log(xhr);
+
+						output.text(data);
+					},
+					error: function(xhr,status) {
+						alert('error');
+					}
+				});
+			});
 		</script>
 	</body>
 </html>
