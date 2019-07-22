@@ -1,93 +1,101 @@
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 
-		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=0" />
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 
-		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-	</head>
-	<body>
-		<select id="choice" size="4">
-			<option>max</option>
-			<option>anna</option>
-			<option>tim</option>
-			<option>alex</option>
-		</select>
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=0" />
 
-		<br><br>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+</head>
 
-		<table border="1">
-			<tr>
-				<td>first:</td>
-				<td><input id="first" type="text"></td>
-			</tr>
-			<tr>
-				<td>last:</td>
-				<td><input id="last" type="text"></td>
-			</tr>
-			<tr>
-				<td>gender:</td>
-				<td>
-					<input type="radio" name="gender" value="male">male
-					<br>
-					<input type="radio" name="gender" value="female">female
-					<br>
-					<input type="radio" name="gender" value="other">other
-				</td>
-			</tr>
-			<tr>
-				<td>random:</td>
-				<td><input id="random" type="text"></td>
-			</tr>
-		</table>
+<body>
+	<select id="choice" size="4">
+		<option>max</option>
+		<option>anna</option>
+		<option>tim</option>
+		<option>alex</option>
+	</select>
 
-		<script type="text/javascript">
-			// when somebody selects an option in the choice selection element, the script should make a get request to: http://cs465.oregonctf.org/playground/ajax/lookup.json?strName=max
-			// the data that is being received by this query is in the json format and might look like: { 'strFirst':'max','strLast':'baum','strGender':'male','strRandom':'3BLJEkKk' }
-			// this received data should subsequently be used to set the first textbox, the last textbox, the gender radio button as well as the random textbox
-			var input = $('#input'),
-				output = $('#output');
+	<br><br>
 
-			var handle = function() {
-				var strInput = input.val();
+	<table border="1">
+		<tr>
+			<td>first:</td>
+			<td><input id="first" type="text"></td>
+		</tr>
+		<tr>
+			<td>last:</td>
+			<td><input id="last" type="text"></td>
+		</tr>
+		<tr>
+			<td>gender:</td>
+			<td>
+				<input type="radio" name="gender" value="male">male
+				<br>
+				<input type="radio" name="gender" value="female">female
+				<br>
+				<input type="radio" name="gender" value="other">other
+			</td>
+		</tr>
+		<tr>
+			<td>random:</td>
+			<td><input id="random" type="text"></td>
+		</tr>
+	</table>
 
-				$.ajax({	
-					url: 'http://cs465.oregonctf.org/playground/ajax/suggest.json',
-					data: {
-						strFile: strInput,
-					},
-					dataType: 'json',
-					method: 'GET',
-					contentType: 'text/plain',
-					beforeSend: function() {
+	<script type="text/javascript">
+		// when somebody selects an option in the choice selection element, the script should make a get request to: http://cs465.oregonctf.org/playground/ajax/lookup.json?strName=max
+		// this received data should subsequently be used to set the first textbox, the last textbox, the gender radio button as well as the random textbox
+		var choice = $('#choice'),
+			first = $('#first'),
+			last = $('#last'),
+			genderMale = $('[name=gender][value=male]'),
+			genderFemale = $('[name=gender][value=female]'),
+			genderOther = $('[name=gender][value=other]'),
+			random = $('#random');
 
-					},
-					complete: function(xhr,status) {
-						
-					},
-					success: function(data, status, xhr) {
-						console.log(data);
-						console.log(status);
-						console.log(xhr);
+		var handle = function () {
+			var strInput = choice.selectedOptions[0].text;
 
-						var arr = data['strFiles'],
-							str = '';
-						for (var i = 0; arr && i < arr.length;++i) {
-							str += arr[i];
-							if(i != (arr.length -1))
-								str += '\n';
-						}
-						output.text(str);
-					},
-					error: function(xhr,status) {
-						alert('error');
+			$.ajax({
+				url: 'http://cs465.oregonctf.org/playground/ajax/lookup.json',
+				data: {
+					strName: strInput,
+				},
+				dataType: 'json',
+				method: 'GET',
+				contentType: 'text/plain',
+				beforeSend: function () {
+
+				},
+				complete: function (xhr, status) {
+					// the data that is being received by this query is in the json format and might look like: { 'strFirst':'max','strLast':'baum','strGender':'male','strRandom':'3BLJEkKk' }
+
+				},
+				success: function (data, status, xhr) {
+					console.log(data);
+					console.log(status);
+					console.log(xhr);
+
+					var arr = data['strFiles'],
+						str = '';
+					for (var i = 0; arr && i < arr.length; ++i) {
+						str += arr[i];
+						if (i != (arr.length - 1))
+							str += '\n';
 					}
-				});
-			};
+					output.text(str);
+				},
+				error: function (xhr, status) {
+					alert('error');
+				}
+			});
+		};
 
-			input.on('keyup', handle);
-			input.on('change',handle);
-		</script>
-	</body>
+		input.on('keyup', handle);
+		input.on('change', handle);
+	</script>
+</body>
+
 </html>
