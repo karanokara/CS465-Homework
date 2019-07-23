@@ -10,7 +10,7 @@ server.use('/', express.static(__dirname + '/'));
 
 var io = socket(server.listen(process.env.PORT || 8080));
 
-setInterval(function() {
+setInterval(function () {
 	io.emit('message', {
 		'intTimestamp': new Date().getTime(),
 		'strMessage': Math.random().toString(36).substr(2, 8)
