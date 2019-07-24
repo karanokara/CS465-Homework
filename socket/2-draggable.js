@@ -12,14 +12,14 @@ var io = socket(server.listen(process.env.PORT || 8080));
 
 var objectElements = {};
 
-io.on('connection', function(objectSocket) {
+io.on('connection', function (objectSocket) {
 	console.log('client connected');
 
 	for (var strIdent in objectElements) {
 		io.emit('drag', objectElements[strIdent]);
 	}
 
-	objectSocket.on('drag', function(objectData) {
+	objectSocket.on('drag', function (objectData) {
 		console.log(objectData);
 
 		assert(objectData.strIdent !== undefined);
@@ -31,7 +31,7 @@ io.on('connection', function(objectSocket) {
 		io.emit('drag', objectData);
 	});
 
-	objectSocket.on('disconnect', function() {
+	objectSocket.on('disconnect', function () {
 		console.log('client disconnected');
 	});
 });
